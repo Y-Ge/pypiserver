@@ -1,7 +1,38 @@
 Changelog
 =========
 
-Next Release
+1.2.7 (2019-01-31)
+------------------
+
+- FIX: bcrypt is now *properly* installed in the Docker image, and our
+  automated tests now do a better job of making sure authentication and
+  uploads work as expected in Docker (thanks @ronneke1996, #239; also
+  thanks @kellycampbell, #235 for an alternate approach that wound up
+  being unused but is still appreciated!)
+
+1.2.6 (2019-01-26)
+------------------
+
+- SEC: mitigate potential CRLF injection attacks from malicious URLs
+  (thanks @samwcyo, #237)
+
+1.2.5 (2018-11-11)
+------------------
+
+- FIX: bcrypt is now installed into the Docker image, which allows
+  passlib to work like it should (thanks @Diftraku, #224)
+
+- MAINT: integration tests with ``twine`` have been updated to use the
+  command-line interface rather than the internal API, which should
+  make them more resilient over time (#226)
+
+1.2.4 (2018-08-06)
+------------------
+
+- FIX: the command to download new versions of available packages now
+  works with ``pip`` >= 10.0 (thanks @elboerto, #215)
+
+1.2.3 (2018-08-04)
 ------------------
 
 - MAINT: Remove broken downloads badge (thanks @hugovk, #209)
@@ -20,7 +51,7 @@ Next Release
 
 - DOC: scrubbed docs of links to pypi.python.org
 
-- DEPRECATION: Drop support for Python 3.3 (tahnks @hugovk, #198)
+- DEPRECATION: Drop support for Python 3.3 (thanks @hugovk, #198)
 
 
 1.2.1 (2017-11-29)

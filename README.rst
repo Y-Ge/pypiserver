@@ -9,8 +9,8 @@ pypiserver - minimal PyPI server for use with pip/easy_install
 ==============================================================================
 |pypi-ver| |travis-status| |dependencies| |python-ver| |proj-license|
 
-:Version:     1.2.2
-:Date:        2018-06-12 11:49:30
+:Version:     1.2.7
+:Date:        2019-01-31
 :Source:      https://github.com/pypiserver/pypiserver
 :PyPI:        https://pypi.org/project/pypiserver/
 :Travis:      https://travis-ci.org/pypiserver/pypiserver
@@ -320,26 +320,17 @@ To avoid storing you passwords on disk, in clear text, you may either:
      twine upload -r local --sign -identity user_name ./foo-1.zip
 
 
-Upload with `pypi-uploader`_
-----------------------------
-You can also upload packages using `pypi-uploader`_, which
-obviates the need to download packages locally prior to uploading them to
-pypiserver. You can install it with ``pip install pypi-uploader``, and
-assuming you have a ``pypi_local`` source set up in your ``~/.pypirc``,
-use it like this::
-
-    pypiupload packages mock==1.0.1 requests==2.2.1 -i pypi_local
-    pypiupload requirements requirements.txt -i pypi_local
-
-
 Using the Docker Image
 ======================
 
-Starting with version 1.2.3, official Docker images are built for each
+Starting with version 1.2.5, official Docker images will be built for each
 push to master, each dev, alpha, or beta release, and each final release.
 The most recent full release will always be available under the tag ``latest``,
 and the current master branch will always be available under the tag
-``master``.
+``unstable``.
+
+You can always check to see what tags are currently available at our
+`Docker Repo`_.
 
 To run the most recent release of ``pypiserver`` with Docker, simply::
 
@@ -363,15 +354,18 @@ To serve packages from a directory on the host, e.g. ``~/packages``::
 
     docker run -p 80:8080 -v ~/packages:/data/packages pypiserver/pypiserver:latest
 
-To authenticate against a local ``.htaccess`` file::
+To authenticate against a local ``.htpasswd`` file::
 
-    docker run -p 80:8080 -v ~/.htaccess:/data/.htaccess pypiserver/pypiserver:latest -P .htaccess packages
+    docker run -p 80:8080 -v ~/.htpasswd:/data/.htpasswd pypiserver/pypiserver:latest -P .htpasswd packages
 
 You can also specify ``pypiserver`` to run as a Docker service using a
 composefile. An example composefile is `provided <docker-compose.yml>`_.
 
 
-Alternative Installation methods
+.. _`docker repo`: https://hub.docker.com/r/pypiserver/pypiserver/tags/
+
+
+Alternative Installation Methods
 ================================
 When trying the methods below, first use the following command to check whether
 previous versions of *pypiserver* already exist, and (optionally) uninstall them::
@@ -551,7 +545,7 @@ package and as such, it provides excellent cross-platform support for process
 management. An example configuration file for ``supervisor`` is given below::
 
     [program:pypi]
-    command=/home/pypi/pypi-venv/bin/pypi-server -p 7001 -P /home/pypi/.htaccess /home/pypi/packages
+    command=/home/pypi/pypi-venv/bin/pypi-server -p 7001 -P /home/pypi/.htpasswd /home/pypi/packages
     directory=/home/pypi
     user=pypi
     autostart=true
